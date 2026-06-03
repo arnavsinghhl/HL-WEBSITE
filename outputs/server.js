@@ -3,9 +3,16 @@ const fs = require("node:fs/promises");
 const path = require("node:path");
 const crypto = require("node:crypto");
 const { execFile } = require("node:child_process");
+let xlsx;
+try {
+  xlsx = require("xlsx");
+} catch {
+  xlsx = null;
+}
 
 const root = __dirname;
-const dataDir = path.join(root, "backend-data");
+const bundledDataDir = path.join(root, "backend-data");
+const dataDir = process.env.DATA_DIR || path.join(root, "backend-data");
 const contactsFile = path.join(dataDir, "contacts.json");
 const displayItemsFile = path.join(dataDir, "display-items.json");
 const qualificationMenuFile = path.join(dataDir, "qualification-menu.json");
@@ -501,7 +508,114 @@ function pythonPath() {
   return path.join(dependenciesDir, "python", "python.exe");
 }
 
+const excelAliases = {
+  idNumber: [
+    "idnumber",
+    "id",
+    "memberid",
+    "distributorid",
+    "supervisorid",
+    "associateid",
+    "customerid",
+    "hlid",
+    "hblid",
+    "herbalifeid",
+  ],
+  name: ["name", "fullname", "membername", "distributorname", "supervisorname", "associatename", "customername"],
+  ppv: ["ppv", "personalvolume", "personalpv", "personalpointvolume"],
+  totalVolume: ["totalvolume", "totalvol", "volume", "totalpv", "tv", "pointvolume"],
+  currentMonth: ["currentmonth", "currentmonthname", "month", "monthname", "currentmnth"],
+  sponsorName: ["sponsorname", "sponsor", "sponsername", "sponser", "upline", "uplinename"],
+  volumeRequired: [
+    "volumerequired",
+    "requiredvolume",
+    "volumerequiredforjimcorbettqualification",
+    "jimcorbettrequiredvolume",
+    "required",
+    "shortfall",
+    "balancevolume",
+    "volumeshortfall",
+    "neededvolume",
+  ],
+  result: ["result", "status", "qualificationresult", "progress", "progressstatus", "currentstatus"],
+};
+
+function normalizeHeader(value) {
+  return String(value || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+}
+
+function cellText(value) {
+  if (value === null || value === undefined) return "";
+  return String(value).trim();
+}
+
+function headerMatches(header, key) {
+  if (!header) return false;
+  if (excelAliases[key].includes(header)) return true;
+  if (key === "idNumber") return header.endsWith("id") || header.includes("idnumber") || header.includes("distributorid");
+  if (key === "name") return header.includes("name");
+  if (key === "ppv") return header.includes("ppv") || header.includes("personalvolume");
+  if (key === "totalVolume") return (header.includes("total") && (header.includes("volume") || header.includes("pv"))) || header === "volume";
+  if (key === "currentMonth") return header.includes("month");
+  if (key === "sponsorName") return header.includes("sponsor") || header.includes("sponser") || header.includes("upline");
+  if (key === "volumeRequired") {
+    return header.includes("required") || header.includes("shortfall") || header.includes("balancevolume") || header.includes("needed");
+  }
+  if (key === "result") return header.includes("result") || header.includes("status") || header.includes("progress");
+  return false;
+}
+
+function findExcelIndex(headers, key) {
+  return headers.findIndex((header) => headerMatches(header, key));
+}
+
+function findExcelHeaderRow(rows) {
+  let best = null;
+  rows.slice(0, 30).forEach((row, rowIndex) => {
+    const headers = row.map(normalizeHeader);
+    const indexes = Object.fromEntries(Object.keys(excelAliases).map((key) => [key, findExcelIndex(headers, key)]));
+    const score = Object.values(indexes).filter((index) => index !== -1).length;
+    if (indexes.idNumber !== -1 && (!best || score > best.score)) {
+      best = { rowIndex, indexes, score };
+    }
+  });
+  return best;
+}
+
+function parseExcelFileWithNode(filePath) {
+  const workbook = xlsx.readFile(filePath, { cellDates: false });
+  const sheetName = workbook.SheetNames[0];
+  const rows = xlsx.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1, raw: false, defval: "" });
+
+  if (rows.length < 2) return [];
+  const header = findExcelHeaderRow(rows);
+  if (!header) return [];
+
+  return rows.slice(header.rowIndex + 1).map((row) => {
+    const valueFor = (key) => {
+      const index = header.indexes[key];
+      if (index === -1 || index >= row.length) return "";
+      return cellText(row[index]);
+    };
+
+    return {
+      idNumber: valueFor("idNumber"),
+      name: valueFor("name"),
+      ppv: valueFor("ppv"),
+      totalVolume: valueFor("totalVolume"),
+      currentMonth: valueFor("currentMonth"),
+      sponsorName: valueFor("sponsorName"),
+      volumeRequired: valueFor("volumeRequired"),
+      result: valueFor("result"),
+    };
+  }).filter((record) => record.idNumber);
+}
+
 function parseExcelFile(filePath) {
+  if (xlsx) {
+    return Promise.resolve(parseExcelFileWithNode(filePath));
+  }
+
   return new Promise((resolve, reject) => {
     execFile(
       pythonPath(),
@@ -1510,7 +1624,7 @@ async function serveStatic(request, response, url) {
 
   const filePath = path.normalize(path.join(root, requestedPath));
   const isInsideRoot = filePath.startsWith(root);
-  const isProtected = filePath.startsWith(dataDir) || path.basename(filePath) === "server.js";
+  const isProtected = filePath.startsWith(dataDir) || filePath.startsWith(bundledDataDir) || path.basename(filePath) === "server.js";
 
   if (!isInsideRoot || isProtected) {
     response.writeHead(403, { "Content-Type": "text/plain; charset=utf-8" });

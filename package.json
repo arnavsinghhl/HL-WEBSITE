@@ -1,0 +1,16 @@
+{
+  "name": "hl-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Wellness Path website with qualification checks and admin backend.",
+  "scripts": {
+    "start": "node outputs/server.js",
+    "check": "node --check outputs/script.js && node work/qa-site.js"
+  },
+  "dependencies": {
+    "xlsx": "^0.18.5"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
