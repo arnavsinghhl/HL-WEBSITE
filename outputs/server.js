@@ -15,6 +15,8 @@ const bundledDataDir = path.join(root, "backend-data");
 const dataDir = process.env.DATA_DIR || path.join(root, "backend-data");
 const contactsFile = path.join(dataDir, "contacts.json");
 const displayItemsFile = path.join(dataDir, "display-items.json");
+const siteSettingsFile = path.join(dataDir, "site-settings.json");
+const successStoriesFile = path.join(dataDir, "success-stories.json");
 const qualificationMenuFile = path.join(dataDir, "qualification-menu.json");
 const qualificationCriteriaFile = path.join(dataDir, "qualification-criteria.json");
 const qualificationRecordsFile = path.join(dataDir, "qualification-records.json");
@@ -47,6 +49,8 @@ async function ensureDataFiles() {
   await fs.mkdir(dataDir, { recursive: true });
   await ensureJsonFile(contactsFile);
   await ensureJsonFile(displayItemsFile);
+  await ensureSiteSettingsFile();
+  await ensureSuccessStoriesFile();
   await ensureQualificationMenuFile();
   await ensureQualificationCriteriaFile();
   await ensureJsonFile(qualificationRecordsFile);
@@ -63,6 +67,117 @@ async function ensureJsonFile(file) {
     await fs.access(file);
   } catch {
     await fs.writeFile(file, "[]\n", "utf8");
+  }
+}
+
+function defaultSiteSettings() {
+  return {
+    phone: "+91 84395 72500",
+    email: "arnavsingh2008hl@gmail.com",
+    whatsappUrl: "https://whatsapp.com/channel/0029VbCrs5YIHphJzvdMWi0n",
+    instagramUrl: "#",
+    youtubeUrl: "#",
+    zoomUrl: "#",
+    communityTitle: "Grow Together Every Day",
+    communityText:
+      "Stay connected through our WhatsApp channel and live Zoom meetings for wellness updates, habit check-ins, fitness motivation, and community support.",
+    communityBullets: [
+      "Daily wellness reminders and healthy habit updates",
+      "WhatsApp announcements, challenges, and motivation",
+      "Zoom meetings for learning, accountability, and support",
+    ],
+    updatedAt: new Date().toISOString(),
+  };
+}
+
+async function ensureSiteSettingsFile() {
+  try {
+    await fs.access(siteSettingsFile);
+    const settings = await readJson(siteSettingsFile);
+    if (!settings || Array.isArray(settings) || !Object.keys(settings).length) {
+      await writeJson(siteSettingsFile, defaultSiteSettings());
+    }
+  } catch {
+    await writeJson(siteSettingsFile, defaultSiteSettings());
+  }
+}
+
+function defaultSuccessStories() {
+  return [
+    {
+      id: "executive-presidents-team",
+      title: "EXECUTIVE PRESIDENT'S TEAM",
+      person: "Mr. Jaipal Singh Prajapati & Amita Rani",
+      result: "EXECUTIVE PRESIDENT'S TEAM Mr. Jaipal Singh Prajapati & Amita Rani",
+      image: "assets/executive-presidents-team.png",
+      text: "Amita Rani & Jai Pal Singh from Muzaffarnagar, Uttar Pradesh, achieved the New Executive President's Team level through hard work, dedication, and a strong mission to help people improve their wellness.",
+      paragraphs: [
+        "My name is Jaipal Singh, and I used to work as a constable in Uttar Pradesh PAC. My wife, Amita Rani, works as a staff nurse at Uttar Pradesh Health Mission.",
+        "In October 2017, I started my journey with Herbalife. At the time, I was worried about my wife's increasing weight and her well-being. I learned about Herbalife products through my sponsor, who helped me achieve effective results for my wife. She lost 15 kg of weight and improved her energy levels.",
+        "Seeing her results, I also started using the products and increased my weight by 10 kg while improving my wellness. As people noticed our changes, we started helping them achieve their fitness goals.",
+        "Currently, we work on the Virtual Nutrition Club \"Fit India Club,\" organize shake parties at the homes of satisfied customers, and guide people to stay fit and healthy. We also emphasize the importance of wellness in their lives.",
+        "Recently, we achieved the New President's Team level through hard work and dedication. We would like to thank our sponsor Millionaire Team Kunwar Pal Singh, upline Millionaire Team Mr. Vipin Rana, and mentor Senior Executive President's Team Mr. Gyanendra Singh.",
+        "We are grateful to the leadership, the entire organization, and our amazing team members who inspire us to continue our mission. Finally, we express our heartfelt gratitude to Mr. Mark Hughes for providing such a wonderful opportunity.",
+        "Amita Rani & Jai Pal Singh, Muzaffarnagar, Uttar Pradesh.",
+      ],
+      active: true,
+      sortOrder: 10,
+      updatedAt: new Date().toISOString(),
+    },
+    {
+      id: "daily-accountability",
+      title: "Daily Accountability",
+      person: "Neha Sharma",
+      result: "Stayed motivated with community support",
+      image: "assets/community-session.png",
+      text: "Neha wanted structure and encouragement. The daily wellness sessions helped her show up regularly, track her habits, and stay connected with people working toward similar health goals.",
+      paragraphs: [
+        "Neha wanted structure and encouragement. The daily wellness sessions helped her show up regularly, track her habits, and stay connected with people working toward similar health goals.",
+      ],
+      active: true,
+      sortOrder: 20,
+      updatedAt: new Date().toISOString(),
+    },
+    {
+      id: "nutrition-clarity",
+      title: "Nutrition Clarity",
+      person: "Rohit Mehra",
+      result: "Built healthier meal habits",
+      image: "assets/nutrition-bowl.png",
+      text: "Rohit learned how to plan meals around his schedule instead of following confusing quick fixes. With a clearer nutrition plan, he felt more in control of his choices and progress.",
+      paragraphs: [
+        "Rohit learned how to plan meals around his schedule instead of following confusing quick fixes. With a clearer nutrition plan, he felt more in control of his choices and progress.",
+      ],
+      active: true,
+      sortOrder: 30,
+      updatedAt: new Date().toISOString(),
+    },
+    {
+      id: "wellness-reset",
+      title: "Wellness Reset",
+      person: "Priya Kapoor",
+      result: "Created a balanced lifestyle routine",
+      image: "assets/hero-wellness.png",
+      text: "Priya focused on sustainable habits across nutrition, movement, and mindset. Small daily wins helped her rebuild discipline and feel more positive about her wellness journey.",
+      paragraphs: [
+        "Priya focused on sustainable habits across nutrition, movement, and mindset. Small daily wins helped her rebuild discipline and feel more positive about her wellness journey.",
+      ],
+      active: true,
+      sortOrder: 40,
+      updatedAt: new Date().toISOString(),
+    },
+  ];
+}
+
+async function ensureSuccessStoriesFile() {
+  try {
+    await fs.access(successStoriesFile);
+    const stories = await readJson(successStoriesFile);
+    if (!Array.isArray(stories) || !stories.length) {
+      await writeJson(successStoriesFile, defaultSuccessStories());
+    }
+  } catch {
+    await writeJson(successStoriesFile, defaultSuccessStories());
   }
 }
 
@@ -284,6 +399,54 @@ function cleanQualificationMenuItem(body, forcedId) {
     href: cleanText(body.href || body.link || body.pageLink, 240),
     image: cleanText(body.image || body.imagePath, 240),
     criteria: cleanText(body.criteria, 2000),
+    active: cleanBoolean(body.active, true),
+    sortOrder: Number.isFinite(Number(body.sortOrder)) ? Number(body.sortOrder) : 100,
+    updatedAt: new Date().toISOString(),
+  };
+}
+
+function cleanUrl(value) {
+  const url = cleanText(value, 500);
+  return url || "#";
+}
+
+function cleanSiteSettings(body) {
+  const current = body || {};
+  const bullets = Array.isArray(current.communityBullets)
+    ? current.communityBullets
+    : String(current.communityBullets || "")
+        .split(/\r?\n/)
+        .map((line) => line.trim())
+        .filter(Boolean);
+
+  return {
+    phone: cleanText(current.phone, 60) || "+91 84395 72500",
+    email: cleanText(current.email, 160) || "arnavsingh2008hl@gmail.com",
+    whatsappUrl: cleanUrl(current.whatsappUrl),
+    instagramUrl: cleanUrl(current.instagramUrl),
+    youtubeUrl: cleanUrl(current.youtubeUrl),
+    zoomUrl: cleanUrl(current.zoomUrl),
+    communityTitle: cleanText(current.communityTitle, 160) || "Grow Together Every Day",
+    communityText: cleanText(current.communityText, 700),
+    communityBullets: bullets.slice(0, 8).map((line) => cleanText(line, 180)),
+    updatedAt: new Date().toISOString(),
+  };
+}
+
+function cleanSuccessStory(body, forcedId) {
+  const storyText = cleanText(body.storyText || body.text, 12000);
+  const paragraphs = (Array.isArray(body.paragraphs) ? body.paragraphs : storyText.split(/\n\s*\n/))
+    .map((paragraph) => cleanText(paragraph, 2000))
+    .filter(Boolean);
+
+  return {
+    id: slugify(forcedId || body.id || body.title || body.person),
+    title: cleanText(body.title, 180),
+    person: cleanText(body.person, 180),
+    result: cleanText(body.result, 260),
+    image: cleanText(body.image || body.imagePath, 500),
+    text: cleanText(body.text || paragraphs[0] || storyText, 800),
+    paragraphs,
     active: cleanBoolean(body.active, true),
     sortOrder: Number.isFinite(Number(body.sortOrder)) ? Number(body.sortOrder) : 100,
     updatedAt: new Date().toISOString(),
@@ -969,6 +1132,105 @@ async function handleApi(request, response, url) {
     items.unshift(item);
     await writeJson(displayItemsFile, items);
     sendJson(response, 201, { ok: true, item });
+    return true;
+  }
+
+  if (url.pathname === "/api/site-settings" && request.method === "GET") {
+    await ensureSiteSettingsFile();
+    sendJson(response, 200, await readJson(siteSettingsFile));
+    return true;
+  }
+
+  if (url.pathname === "/api/site-settings" && request.method === "PUT") {
+    if (!requireAdmin(request, response)) return true;
+    const settings = cleanSiteSettings(await readBody(request));
+    await writeJson(siteSettingsFile, settings);
+    sendJson(response, 200, { ok: true, settings });
+    return true;
+  }
+
+  if (url.pathname === "/api/success-stories" && request.method === "GET") {
+    await ensureSuccessStoriesFile();
+    const stories = (await readJson(successStoriesFile))
+      .slice()
+      .sort((a, b) => Number(a.sortOrder || 100) - Number(b.sortOrder || 100));
+    sendJson(response, 200, isAdminRequest(request) ? stories : stories.filter((story) => story.active !== false));
+    return true;
+  }
+
+  if (url.pathname === "/api/success-stories" && request.method === "POST") {
+    if (!requireAdmin(request, response)) return true;
+    const story = cleanSuccessStory(await readBody(request));
+
+    if (!story.title || !story.person || !story.image || !story.paragraphs.length) {
+      sendJson(response, 400, { error: "Title, name, image, and story text are required." });
+      return true;
+    }
+
+    const stories = await readJson(successStoriesFile);
+    const existingIndex = stories.findIndex((entry) => String(entry.id) === story.id);
+    if (existingIndex >= 0) {
+      stories[existingIndex] = story;
+    } else {
+      stories.push(story);
+    }
+
+    await writeJson(successStoriesFile, stories);
+    sendJson(response, 201, { ok: true, story, stories });
+    return true;
+  }
+
+  if (url.pathname.startsWith("/api/success-stories/") && request.method === "GET") {
+    await ensureSuccessStoriesFile();
+    const id = decodeURIComponent(url.pathname.replace("/api/success-stories/", "")).trim();
+    const stories = await readJson(successStoriesFile);
+    const story = stories.find((entry) => String(entry.id) === id && (entry.active !== false || isAdminRequest(request)));
+
+    if (!story) {
+      sendJson(response, 404, { error: "No success story found." });
+      return true;
+    }
+
+    sendJson(response, 200, story);
+    return true;
+  }
+
+  if (url.pathname.startsWith("/api/success-stories/") && request.method === "PUT") {
+    if (!requireAdmin(request, response)) return true;
+    const id = decodeURIComponent(url.pathname.replace("/api/success-stories/", "")).trim();
+    const story = cleanSuccessStory(await readBody(request), id);
+
+    if (!story.title || !story.person || !story.image || !story.paragraphs.length) {
+      sendJson(response, 400, { error: "Title, name, image, and story text are required." });
+      return true;
+    }
+
+    const stories = await readJson(successStoriesFile);
+    const existingIndex = stories.findIndex((entry) => String(entry.id) === id);
+    if (existingIndex >= 0) {
+      stories[existingIndex] = story;
+    } else {
+      stories.push(story);
+    }
+
+    await writeJson(successStoriesFile, stories);
+    sendJson(response, 200, { ok: true, story, stories });
+    return true;
+  }
+
+  if (url.pathname.startsWith("/api/success-stories/") && request.method === "DELETE") {
+    if (!requireAdmin(request, response)) return true;
+    const id = decodeURIComponent(url.pathname.replace("/api/success-stories/", "")).trim();
+    const stories = await readJson(successStoriesFile);
+    const updatedStories = stories.filter((story) => String(story.id) !== id);
+
+    if (stories.length === updatedStories.length) {
+      sendJson(response, 404, { error: "No success story found." });
+      return true;
+    }
+
+    await writeJson(successStoriesFile, updatedStories);
+    sendJson(response, 200, { ok: true, count: updatedStories.length });
     return true;
   }
 

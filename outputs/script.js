@@ -63,7 +63,7 @@ if (navToggle && navLinks) {
   });
 }
 
-const successStoryRecords = [
+const defaultSuccessStoryRecords = [
   {
     id: "executive-presidents-team",
     title: "EXECUTIVE PRESIDENT'S TEAM",
@@ -107,7 +107,6 @@ const successStoryRecords = [
   },
 ];
 
-const storyCards = document.querySelectorAll("[data-story-card]");
 const storyDetailTitles = document.querySelectorAll("[data-story-detail-title]");
 const storyDetailPeople = document.querySelectorAll("[data-story-detail-person]");
 const storyDetailResults = document.querySelectorAll("[data-story-detail-result]");
@@ -115,9 +114,11 @@ const storyDetailTexts = document.querySelectorAll("[data-story-detail-text]");
 const storyDetailImages = document.querySelectorAll("[data-story-detail-image]");
 const successStoryPage = document.querySelector("[data-success-story-page]");
 const storyPageStatus = document.querySelector("[data-story-page-status]");
+let successStoryRecords = defaultSuccessStoryRecords;
 
 function storyFromCard(card) {
   return {
+    id: card.dataset.storyId || "",
     title: card.dataset.storyTitle || "",
     person: card.dataset.storyPerson || "",
     result: card.dataset.storyResult || "",
@@ -148,42 +149,155 @@ function setStoryDetail(story) {
   });
 }
 
-function setActiveStory(card) {
+function renderSuccessStoryCards(target, stories) {
+  if (!target) return;
+  const visibleStories = stories.filter((story) => story.active !== false);
+
+  if (!visibleStories.length) {
+    target.innerHTML = '<article class="resource-card"><h3>No stories yet</h3><p class="card-copy">Add active success stories from the admin panel.</p></article>';
+    return;
+  }
+
+  target.innerHTML = visibleStories.map((story, index) => `
+    <a
+      href="success-story.html?id=${encodeURIComponent(story.id)}"
+      class="story-photo-card${index === 0 ? " is-active" : ""}"
+      data-story-card
+      data-story-id="${escapeHtml(story.id)}"
+      data-story-title="${escapeHtml(story.title)}"
+      data-story-person="${escapeHtml(story.person)}"
+      data-story-result="${escapeHtml(story.result)}"
+      data-story-image="${escapeHtml(story.image)}"
+      data-story-text="${escapeHtml(story.text || (story.paragraphs || [])[0] || "")}"
+    >
+      <img src="${escapeHtml(story.image)}" alt="${escapeHtml(story.person || story.title)} success story photo">
+      <span>${escapeHtml(story.title)}</span>
+      <strong>${escapeHtml(story.person)}</strong>
+    </a>
+  `).join("");
+}
+
+function setActiveStory(card, cards) {
   if (!card) return;
 
-  storyCards.forEach((item) => {
+  cards.forEach((item) => {
     const isSelected = item === card;
     item.classList.toggle("is-active", isSelected);
   });
 
-  setStoryDetail(storyFromCard(card));
+  const storyId = card.dataset.storyId;
+  setStoryDetail(successStoryRecords.find((story) => story.id === storyId) || storyFromCard(card));
 }
 
-if (storyCards.length) {
+function setupSuccessStoryCards() {
+  const storyCards = Array.from(document.querySelectorAll("[data-story-card]"));
+  if (!storyCards.length) return;
+
   storyCards.forEach((card) => {
     card.addEventListener("click", () => {
-      setActiveStory(card);
+      setActiveStory(card, storyCards);
       if (card.dataset.storyLink && !(card instanceof HTMLAnchorElement)) {
         window.location.href = card.dataset.storyLink;
       }
     });
   });
-  setActiveStory(document.querySelector("[data-story-card].is-active") || storyCards[0]);
+
+  if (!successStoryPage) {
+    setActiveStory(document.querySelector("[data-story-card].is-active") || storyCards[0], storyCards);
+  }
 }
 
-if (successStoryPage) {
+function loadSuccessStoryPageFromStories(stories) {
+  if (!successStoryPage) return;
   const params = new URLSearchParams(window.location.search);
   const storyId = params.get("id") || "executive-presidents-team";
-  const story = successStoryRecords.find((item) => item.id === storyId);
+  const story = stories.find((item) => item.id === storyId);
 
   if (story) {
     setStoryDetail(story);
     document.title = `${story.title} | Wellness Path`;
     if (storyPageStatus) storyPageStatus.textContent = story.result;
   } else {
-    const defaultStory = successStoryRecords[0];
+    const defaultStory = stories[0] || defaultSuccessStoryRecords[0];
     setStoryDetail(defaultStory);
     if (storyPageStatus) storyPageStatus.textContent = "This story is not available yet.";
+  }
+}
+
+async function loadSuccessStories() {
+  const listTargets = document.querySelectorAll("[data-success-story-list]");
+  if (!listTargets.length && !successStoryPage && !document.querySelector("[data-admin-success-stories-list]")) return;
+
+  try {
+    const stories = await apiRequest("/api/success-stories");
+    if (Array.isArray(stories) && stories.length) {
+      successStoryRecords = stories;
+    }
+  } catch {
+    successStoryRecords = defaultSuccessStoryRecords;
+  }
+
+  listTargets.forEach((target) => renderSuccessStoryCards(target, successStoryRecords));
+  setupSuccessStoryCards();
+  loadSuccessStoryPageFromStories(successStoryRecords);
+  renderAdminSuccessStories(successStoryRecords);
+}
+
+function phoneHref(phone) {
+  const digits = String(phone || "").replace(/[^\d+]/g, "");
+  return digits ? `tel:${digits}` : "#";
+}
+
+function mailHref(email) {
+  return email ? `mailto:${email}` : "#";
+}
+
+function setExternalLink(anchor, href) {
+  if (!anchor) return;
+  anchor.href = href || "#";
+  if (href && href !== "#") {
+    anchor.target = "_blank";
+    anchor.rel = "noopener";
+  }
+}
+
+function applySiteSettings(settings) {
+  if (!settings) return;
+
+  document.querySelectorAll('a[href^="tel:"]').forEach((anchor) => {
+    anchor.href = phoneHref(settings.phone);
+    if (!anchor.classList.contains("nav-call")) anchor.textContent = settings.phone || anchor.textContent;
+  });
+  document.querySelectorAll('a[href^="mailto:"]').forEach((anchor) => {
+    anchor.href = mailHref(settings.email);
+    anchor.textContent = settings.email || anchor.textContent;
+  });
+  document.querySelectorAll('a[aria-label="WhatsApp"]').forEach((anchor) => setExternalLink(anchor, settings.whatsappUrl));
+  document.querySelectorAll('a[aria-label="Instagram"]').forEach((anchor) => setExternalLink(anchor, settings.instagramUrl));
+  document.querySelectorAll('a[aria-label="YouTube"]').forEach((anchor) => setExternalLink(anchor, settings.youtubeUrl));
+  document.querySelectorAll("[data-community-whatsapp-link]").forEach((anchor) => setExternalLink(anchor, settings.whatsappUrl));
+  document.querySelectorAll("[data-community-zoom-link]").forEach((anchor) => setExternalLink(anchor, settings.zoomUrl));
+
+  const communityTitle = document.querySelector("[data-community-title]");
+  const communityText = document.querySelector("[data-community-text]");
+  const communityBullets = document.querySelector("[data-community-bullets]");
+  if (communityTitle) communityTitle.textContent = settings.communityTitle || communityTitle.textContent;
+  if (communityText) communityText.textContent = settings.communityText || communityText.textContent;
+  if (communityBullets && Array.isArray(settings.communityBullets)) {
+    communityBullets.innerHTML = settings.communityBullets.map((line) => `<li>${escapeHtml(line)}</li>`).join("");
+  }
+
+  fillSiteSettingsForm(settings);
+}
+
+async function loadSiteSettings() {
+  if (!document.querySelector("[data-site-settings-form]") && !document.querySelector("[data-community-title]") && !document.querySelector(".footer-socials")) return;
+
+  try {
+    const settings = await apiRequest("/api/site-settings");
+    applySiteSettings(settings);
+  } catch {
+    fillSiteSettingsForm(null);
   }
 }
 
@@ -1424,6 +1538,166 @@ if (displayItemForm) {
   });
 }
 
+function fillSiteSettingsForm(settings) {
+  const form = document.querySelector("[data-site-settings-form]");
+  if (!form || !settings) return;
+  form.querySelector("#settings-phone").value = settings.phone || "";
+  form.querySelector("#settings-email").value = settings.email || "";
+  form.querySelector("#settings-whatsapp").value = settings.whatsappUrl || "";
+  form.querySelector("#settings-zoom").value = settings.zoomUrl || "";
+  form.querySelector("#settings-instagram").value = settings.instagramUrl || "";
+  form.querySelector("#settings-youtube").value = settings.youtubeUrl || "";
+  form.querySelector("#settings-community-title").value = settings.communityTitle || "";
+  form.querySelector("#settings-community-text").value = settings.communityText || "";
+  form.querySelector("#settings-community-bullets").value = (settings.communityBullets || []).join("\n");
+}
+
+const siteSettingsForm = document.querySelector("[data-site-settings-form]");
+
+if (siteSettingsForm) {
+  siteSettingsForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const status = siteSettingsForm.querySelector(".form-status");
+    const settings = {
+      phone: siteSettingsForm.querySelector("#settings-phone")?.value?.trim(),
+      email: siteSettingsForm.querySelector("#settings-email")?.value?.trim(),
+      whatsappUrl: siteSettingsForm.querySelector("#settings-whatsapp")?.value?.trim(),
+      zoomUrl: siteSettingsForm.querySelector("#settings-zoom")?.value?.trim(),
+      instagramUrl: siteSettingsForm.querySelector("#settings-instagram")?.value?.trim(),
+      youtubeUrl: siteSettingsForm.querySelector("#settings-youtube")?.value?.trim(),
+      communityTitle: siteSettingsForm.querySelector("#settings-community-title")?.value?.trim(),
+      communityText: siteSettingsForm.querySelector("#settings-community-text")?.value?.trim(),
+      communityBullets: siteSettingsForm.querySelector("#settings-community-bullets")?.value?.trim(),
+    };
+
+    if (status) status.textContent = "Saving site settings...";
+
+    try {
+      const payload = await apiRequest("/api/site-settings", {
+        method: "PUT",
+        body: JSON.stringify(settings),
+      });
+      applySiteSettings(payload.settings);
+      if (status) status.textContent = "Site settings saved.";
+    } catch (error) {
+      if (status) status.textContent = error.message || "Could not save site settings.";
+    }
+  });
+}
+
+function renderAdminSuccessStories(stories) {
+  const target = document.querySelector("[data-admin-success-stories-list]");
+  if (!target) return;
+
+  window.successStoriesCache = stories;
+
+  if (!stories.length) {
+    target.innerHTML = '<tr><td colspan="4">No success stories saved yet.</td></tr>';
+    return;
+  }
+
+  target.innerHTML = stories.map((story) => `
+    <tr>
+      <td>${escapeHtml(story.title)}<span class="timestamp">${escapeHtml(story.person)}${story.updatedAt ? ` | ${escapeHtml(formatDate(story.updatedAt))}` : ""}</span></td>
+      <td>${escapeHtml(story.image || "-")}<span class="timestamp">Order ${escapeHtml(story.sortOrder || 100)}</span></td>
+      <td>${story.active === false ? "Hidden" : "Visible"}</td>
+      <td>
+        <div class="table-actions">
+          <button class="btn btn-soft" type="button" data-edit-success-story="${escapeHtml(story.id)}">Edit</button>
+          <button class="btn btn-soft" type="button" data-delete-success-story="${escapeHtml(story.id)}">Delete</button>
+        </div>
+      </td>
+    </tr>
+  `).join("");
+}
+
+function fillSuccessStoryForm(story) {
+  const form = document.querySelector("[data-success-story-form]");
+  if (!form) return;
+
+  form.querySelector("#success-story-id").value = story?.id || "";
+  form.querySelector("#success-story-title").value = story?.title || "";
+  form.querySelector("#success-story-person").value = story?.person || "";
+  form.querySelector("#success-story-result").value = story?.result || "";
+  form.querySelector("#success-story-image").value = story?.image || "";
+  form.querySelector("#success-story-text").value = (story?.paragraphs?.length ? story.paragraphs : [story?.text || ""]).filter(Boolean).join("\n\n");
+  form.querySelector("#success-story-sort-order").value = story?.sortOrder || 100;
+  form.querySelector("#success-story-active").checked = story?.active !== false;
+}
+
+const successStoryForm = document.querySelector("[data-success-story-form]");
+
+if (successStoryForm) {
+  successStoryForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const status = successStoryForm.querySelector(".form-status");
+    const existingId = successStoryForm.querySelector("#success-story-id")?.value?.trim();
+    const story = {
+      title: successStoryForm.querySelector("#success-story-title")?.value?.trim(),
+      person: successStoryForm.querySelector("#success-story-person")?.value?.trim(),
+      result: successStoryForm.querySelector("#success-story-result")?.value?.trim(),
+      image: successStoryForm.querySelector("#success-story-image")?.value?.trim(),
+      storyText: successStoryForm.querySelector("#success-story-text")?.value?.trim(),
+      sortOrder: successStoryForm.querySelector("#success-story-sort-order")?.value?.trim(),
+      active: successStoryForm.querySelector("#success-story-active")?.checked,
+    };
+
+    if (!story.title || !story.person || !story.image || !story.storyText) {
+      if (status) status.textContent = "Title, name, image, and story text are required.";
+      return;
+    }
+
+    if (status) status.textContent = "Saving success story...";
+
+    try {
+      const path = existingId ? `/api/success-stories/${encodeURIComponent(existingId)}` : "/api/success-stories";
+      const method = existingId ? "PUT" : "POST";
+      const payload = await apiRequest(path, {
+        method,
+        body: JSON.stringify(story),
+      });
+      fillSuccessStoryForm(payload.story);
+      if (status) status.textContent = `${payload.story.title} saved.`;
+      await loadSuccessStories();
+    } catch (error) {
+      if (status) status.textContent = error.message || "Could not save this success story.";
+    }
+  });
+
+  successStoryForm.querySelector("[data-clear-success-story-form]")?.addEventListener("click", () => {
+    fillSuccessStoryForm(null);
+    successStoryForm.querySelector(".form-status").textContent = "";
+  });
+}
+
+const adminSuccessStoriesList = document.querySelector("[data-admin-success-stories-list]");
+
+if (adminSuccessStoriesList) {
+  adminSuccessStoriesList.addEventListener("click", async (event) => {
+    const editId = event.target?.dataset?.editSuccessStory;
+    const deleteId = event.target?.dataset?.deleteSuccessStory;
+
+    if (editId) {
+      const story = (window.successStoriesCache || []).find((entry) => String(entry.id) === String(editId));
+      fillSuccessStoryForm(story);
+      document.querySelector("[data-success-story-form]")?.scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
+
+    if (deleteId) {
+      const story = (window.successStoriesCache || []).find((entry) => String(entry.id) === String(deleteId));
+      if (!window.confirm(`Delete ${story?.title || "this success story"}?`)) return;
+      try {
+        await apiRequest(`/api/success-stories/${encodeURIComponent(deleteId)}`, { method: "DELETE" });
+        fillSuccessStoryForm(null);
+        await loadSuccessStories();
+      } catch (error) {
+        window.alert(error.message || "Could not delete this success story.");
+      }
+    }
+  });
+}
+
 const qualificationMenuForm = document.querySelector("[data-qualification-menu-form]");
 
 if (qualificationMenuForm) {
@@ -2517,6 +2791,8 @@ Object.values(progressAdminConfigs).forEach((config) => {
 });
 
 loadContacts();
+loadSiteSettings();
+loadSuccessStories();
 loadDisplayItems();
 loadQualificationMenu();
 loadQualificationCriteria();

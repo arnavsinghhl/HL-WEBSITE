@@ -5,6 +5,8 @@ node_modules/
 
 # Local backend data generated from admin uploads and contact forms.
 outputs/backend-data/contacts.json
+outputs/backend-data/site-settings.json
+outputs/backend-data/success-stories.json
 outputs/backend-data/*-records.json
 
 # Local QA screenshots if Playwright is available.

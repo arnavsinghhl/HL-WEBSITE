@@ -36,17 +36,29 @@
             <button class="btn btn-soft" type="button" data-admin-logout>Logout</button>
           </div>
           <div class="admin-nav-panel" aria-label="Admin sections">
-            <a href="#overview">Overview</a>
-            <a href="#qualification-menu-editor">Qualification Menu</a>
-            <a href="#qualification-criteria-editor">Calculation Criteria</a>
-            <a href="#jim-corbett-sheet">Jim Corbett Sheets</a>
-            <a href="#below-supervisor-sheet">Below Supervisor Sheets</a>
-            <a href="#gifts-sheet">Gifts Sheets</a>
-            <a href="#goa-sheet">Goa Sheets</a>
-            <a href="#june-special-offer-sheet">June Offer Sheet</a>
-            <a href="#progress-supervisor-sheet">Progress Supervisor</a>
-            <a href="#progress-below-sheet">Progress Below</a>
-            <a href="#admin-searches">Searches</a>
+            <div class="admin-nav-group">
+              <span>Website</span>
+              <a href="#overview">Dashboard</a>
+              <a href="#site-settings">Site Settings</a>
+              <a href="#success-story-manager">Success Stories</a>
+              <a href="#public-updates">Updates</a>
+            </div>
+            <div class="admin-nav-group">
+              <span>Qualifications</span>
+              <a href="#qualification-menu-editor">Menu</a>
+              <a href="#qualification-criteria-editor">Criteria</a>
+              <a href="#jim-corbett-sheet">Jim Corbett</a>
+              <a href="#below-supervisor-sheet">Below Supervisor</a>
+              <a href="#gifts-sheet">Gifts</a>
+              <a href="#goa-sheet">Goa</a>
+              <a href="#june-special-offer-sheet">June Offer</a>
+            </div>
+            <div class="admin-nav-group">
+              <span>Progress</span>
+              <a href="#progress-supervisor-sheet">Supervisor</a>
+              <a href="#progress-below-sheet">Below</a>
+              <a href="#admin-searches">Searches</a>
+            </div>
           </div>
         </div>
       </section>
@@ -103,6 +115,130 @@
           </div>
           <div class="grid grid-3" data-admin-display-items>
             <article class="resource-card"><h3>No items yet</h3><p class="card-copy">Publish an item above to show it here and on the home page.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="site-settings">
+        <div class="container">
+          <div class="section-head">
+            <p class="eyebrow">Website settings</p>
+            <h2>Contact, Social, and Community Links</h2>
+            <p>Edit the links and community text shown across the public website.</p>
+          </div>
+          <form class="contact-form admin-wide-form" data-site-settings-form>
+            <div class="form-grid">
+              <div class="field">
+                <label for="settings-phone">Phone Number</label>
+                <input id="settings-phone" name="phone" autocomplete="off">
+              </div>
+              <div class="field">
+                <label for="settings-email">Email Address</label>
+                <input id="settings-email" name="email" type="email" autocomplete="off">
+              </div>
+              <div class="field">
+                <label for="settings-whatsapp">WhatsApp Channel Link</label>
+                <input id="settings-whatsapp" name="whatsappUrl" autocomplete="off">
+              </div>
+              <div class="field">
+                <label for="settings-zoom">Zoom Meeting Link</label>
+                <input id="settings-zoom" name="zoomUrl" autocomplete="off">
+              </div>
+              <div class="field">
+                <label for="settings-instagram">Instagram Link</label>
+                <input id="settings-instagram" name="instagramUrl" autocomplete="off">
+              </div>
+              <div class="field">
+                <label for="settings-youtube">YouTube Link</label>
+                <input id="settings-youtube" name="youtubeUrl" autocomplete="off">
+              </div>
+            </div>
+            <div class="field">
+              <label for="settings-community-title">Community Section Heading</label>
+              <input id="settings-community-title" name="communityTitle" autocomplete="off">
+            </div>
+            <div class="field">
+              <label for="settings-community-text">Community Section Text</label>
+              <textarea id="settings-community-text" name="communityText"></textarea>
+            </div>
+            <div class="field">
+              <label for="settings-community-bullets">Community Bullet Points</label>
+              <textarea id="settings-community-bullets" name="communityBullets" placeholder="One bullet per line"></textarea>
+            </div>
+            <button class="btn" type="submit">Save Site Settings <span aria-hidden="true">&rarr;</span></button>
+            <p class="form-status" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </section>
+
+      <section class="section section-alt" id="success-story-manager">
+        <div class="container">
+          <div class="section-head">
+            <p class="eyebrow">Story manager</p>
+            <h2>Manage Success Stories</h2>
+            <p>Add, update, hide, and reorder the story cards shown on the homepage and Success Stories page.</p>
+          </div>
+          <div class="admin-layout">
+            <form class="contact-form" data-success-story-form>
+              <h2>Add / Update Story</h2>
+              <input id="success-story-id" name="success-story-id" type="hidden">
+              <div class="field">
+                <label for="success-story-title">Card Heading</label>
+                <input id="success-story-title" name="success-story-title" required>
+              </div>
+              <div class="field">
+                <label for="success-story-person">Name</label>
+                <input id="success-story-person" name="success-story-person" required>
+              </div>
+              <div class="field">
+                <label for="success-story-result">Short Result Line</label>
+                <input id="success-story-result" name="success-story-result" required>
+              </div>
+              <div class="field">
+                <label for="success-story-image">Photo Path or URL</label>
+                <input id="success-story-image" name="success-story-image" placeholder="assets/photo-name.png" required>
+              </div>
+              <div class="field">
+                <label for="success-story-text">Full Story</label>
+                <textarea id="success-story-text" name="success-story-text" placeholder="Use a blank line between paragraphs" required></textarea>
+              </div>
+              <div class="field">
+                <label for="success-story-sort-order">Display Order</label>
+                <input id="success-story-sort-order" name="success-story-sort-order" type="number" value="100">
+              </div>
+              <label class="check-field" for="success-story-active">
+                <input id="success-story-active" name="success-story-active" type="checkbox" checked>
+                Show this story publicly
+              </label>
+              <div class="record-actions">
+                <button class="btn" type="submit">Save Story</button>
+                <button class="btn btn-soft" type="button" data-clear-success-story-form>Clear</button>
+              </div>
+              <p class="form-status" role="status" aria-live="polite"></p>
+            </form>
+
+            <section class="admin-panel">
+              <div class="section-head compact-head">
+                <p class="eyebrow">Saved stories</p>
+                <h2>Story Cards</h2>
+                <p>These cards feed the homepage, Success Stories page, and story detail pages.</p>
+              </div>
+              <div class="table-wrap">
+                <table class="mini-table">
+                  <thead>
+                    <tr>
+                      <th>Story</th>
+                      <th>Photo</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody data-admin-success-stories-list>
+                    <tr><td colspan="4">Start the backend to load success stories.</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
           </div>
         </div>
       </section>
