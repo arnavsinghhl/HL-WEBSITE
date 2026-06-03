@@ -1,0 +1,46 @@
+[
+  {
+    "id": "jim-corbett",
+    "title": "Jim Corbett Qualification",
+    "description": "Ticket slab check for Supervisor and above, PC, and Associate.",
+    "href": "jim-corbett-qualification.html",
+    "image": "assets/jim-corbett-qualification.jpeg",
+    "criteria": "Supervisor and above: 3000 TV = 1 ticket; 5000 TV = 2 tickets; 7000 TV = 3 tickets; 9000 TV = 4 tickets\nPC / Associate: 1000 PPV = 1 ticket; 1500 PPV = 2 tickets; 2000 PPV = 3 tickets",
+    "active": true,
+    "sortOrder": 10,
+    "updatedAt": "2026-06-02T10:40:01.152Z"
+  },
+  {
+    "id": "gifts-pc-associates",
+    "title": "Gifts for PC and Associates",
+    "description": "PPV gift offer check using the Gifts sheet.",
+    "href": "gifts-pc-associates.html",
+    "image": "assets/gifts-pc-associates.jpeg",
+    "criteria": "100+ PPV = Shaker Cup\n200+ PPV = Shaker Cup + Herbalife Nutrition Diary\n300+ PPV = Steel Bottle\n500+ PPV = Steel Bottle + Electric Kettle\n1000+ PPV = BMI Machine",
+    "active": true,
+    "sortOrder": 20,
+    "updatedAt": "2026-06-02T10:40:01.153Z"
+  },
+  {
+    "id": "goa",
+    "title": "Goa Qualification",
+    "description": "Supervisor and above only Goa ticket check.",
+    "href": "goa-qualification.html",
+    "image": "assets/goa-qualification.jpeg",
+    "criteria": "Only Supervisor and above\n28000+ Total Volume = Single Ticket Free\n36000+ Total Volume = Couple Ticket Free",
+    "active": true,
+    "sortOrder": 30,
+    "updatedAt": "2026-06-02T10:40:01.153Z"
+  },
+  {
+    "id": "june-special-offer",
+    "title": "June 2026 Special Offer",
+    "description": "Supervisor and above only TVP reward check.",
+    "href": "june-special-offer.html",
+    "image": "assets/june-special-offer.jpeg",
+    "criteria": "Only Supervisor and above\n500+ TVP = 01 Afresh\n1000+ TVP = 01 Shake Mix\n1500+ TVP = 01 Afresh + 01 Shake Mix\n2000+ TVP = 02 Shake Mix\n2500+ TVP = 01 Afresh + 02 Shake Mix\n3000+ TVP = 03 Shake Mix\n4000+ TVP = 04 Shake Mix\n5000+ TVP = 05 Shake Mix",
+    "active": true,
+    "sortOrder": 40,
+    "updatedAt": "2026-06-02T12:00:00.000Z"
+  }
+]

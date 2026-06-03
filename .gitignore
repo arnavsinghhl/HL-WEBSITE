@@ -1,0 +1,14 @@
+node_modules/
+.env
+.env.*
+*.log
+
+# Local backend data generated from admin uploads and contact forms.
+outputs/backend-data/contacts.json
+outputs/backend-data/*-records.json
+
+# Local QA screenshots if Playwright is available.
+work/*.png
+work/*.xlsx
+work/edge-profile*/
+work/edge-profile-*/

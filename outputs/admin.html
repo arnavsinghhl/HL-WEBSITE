@@ -1,0 +1,1011 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin | Wellness Path</title>
+    <meta name="description" content="View contact submissions and add public website updates.">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body data-page="admin">
+    <header class="site-header">
+      <nav class="nav" aria-label="Primary navigation">
+        <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span><span>Wellness Path</span></a>
+        <button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false"><span aria-hidden="true"></span></button>
+        <div class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="qualification.html">Qualification</a>
+          <a href="tickets.html">Tickets</a>
+          <a href="success-stories.html">Success Stories</a>
+          <a href="about.html">About Us</a>
+          <a href="contact.html">Contact</a>
+          <a href="admin.html" aria-current="page">Admin</a>
+        </div>
+        <a class="nav-call" href="tel:+918439572500" aria-label="Call +91 84395 72500"><span aria-hidden="true">&#9742;</span></a>
+        <a class="btn" href="contact.html">Start Your Journey <span aria-hidden="true">&rarr;</span></a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="page-hero">
+        <div class="container">
+          <p class="eyebrow">Backend admin</p>
+          <h1>Manage Contact Messages and Website Updates</h1>
+          <p>Use this page while the backend server is running to view Get In Touch submissions and add public items shown on the home page.</p>
+          <div class="section-actions">
+            <button class="btn btn-soft" type="button" data-admin-logout>Logout</button>
+          </div>
+          <div class="admin-nav-panel" aria-label="Admin sections">
+            <a href="#overview">Overview</a>
+            <a href="#qualification-menu-editor">Qualification Menu</a>
+            <a href="#qualification-criteria-editor">Calculation Criteria</a>
+            <a href="#jim-corbett-sheet">Jim Corbett Sheets</a>
+            <a href="#below-supervisor-sheet">Below Supervisor Sheets</a>
+            <a href="#gifts-sheet">Gifts Sheets</a>
+            <a href="#goa-sheet">Goa Sheets</a>
+            <a href="#june-special-offer-sheet">June Offer Sheet</a>
+            <a href="#progress-supervisor-sheet">Progress Supervisor</a>
+            <a href="#progress-below-sheet">Progress Below</a>
+            <a href="#admin-searches">Searches</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="overview">
+        <div class="container admin-layout">
+          <form class="contact-form" data-display-item-form>
+            <h2>Add Data to Show</h2>
+            <div class="field">
+              <label for="display-title">Title</label>
+              <input id="display-title" name="title" required>
+            </div>
+            <div class="field">
+              <label for="display-category">Category</label>
+              <input id="display-category" name="category" placeholder="Challenge, Update, Tip">
+            </div>
+            <div class="field">
+              <label for="display-message">Message</label>
+              <textarea id="display-message" name="message" required></textarea>
+            </div>
+            <button class="btn" type="submit">Publish Item <span aria-hidden="true">&rarr;</span></button>
+            <p class="form-status" role="status" aria-live="polite"></p>
+          </form>
+
+          <section class="admin-panel">
+            <div class="section-head">
+              <p class="eyebrow">Get in touch</p>
+              <h2>Contact Submissions</h2>
+            </div>
+            <div class="table-wrap">
+              <table class="mini-table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Message</th>
+                  </tr>
+                </thead>
+                <tbody data-contact-list>
+                  <tr><td colspan="4">Start the backend to load contact messages.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section class="section section-alt" id="public-updates">
+        <div class="container">
+          <div class="section-head">
+            <p class="eyebrow">Public data</p>
+            <h2>Items Currently Shown</h2>
+          </div>
+          <div class="grid grid-3" data-admin-display-items>
+            <article class="resource-card"><h3>No items yet</h3><p class="card-copy">Publish an item above to show it here and on the home page.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="qualification-menu-editor">
+        <div class="container">
+          <div class="section-head">
+            <p class="eyebrow">Qualification chooser</p>
+            <h2>Manage Qualification Menu</h2>
+            <p>Add, remove, hide, and update qualification cards shown on the public Qualification page. The page link should point to the check page for that qualification.</p>
+          </div>
+          <div class="admin-layout">
+            <form class="contact-form" data-qualification-menu-form>
+              <h2>Add / Update Qualification</h2>
+              <input id="qualification-menu-id" name="qualification-menu-id" type="hidden">
+              <div class="field">
+                <label for="qualification-menu-title">Qualification Name</label>
+                <input id="qualification-menu-title" name="qualification-menu-title" autocomplete="off" required>
+              </div>
+              <div class="field">
+                <label for="qualification-menu-description">Short Description</label>
+                <input id="qualification-menu-description" name="qualification-menu-description" placeholder="Example: Supervisor and above only">
+              </div>
+              <div class="field">
+                <label for="qualification-menu-href">Page Link</label>
+                <input id="qualification-menu-href" name="qualification-menu-href" placeholder="example-qualification.html" required>
+              </div>
+              <div class="field">
+                <label for="qualification-menu-image">Flyer Image Path</label>
+                <input id="qualification-menu-image" name="qualification-menu-image" placeholder="assets/example-flyer.jpeg">
+              </div>
+              <div class="field">
+                <label for="qualification-menu-criteria">Criteria Shown on Menu</label>
+                <textarea id="qualification-menu-criteria" name="qualification-menu-criteria" placeholder="One criterion per line"></textarea>
+              </div>
+              <div class="field">
+                <label for="qualification-menu-sort-order">Display Order</label>
+                <input id="qualification-menu-sort-order" name="qualification-menu-sort-order" type="number" value="100">
+              </div>
+              <label class="check-field" for="qualification-menu-active">
+                <input id="qualification-menu-active" name="qualification-menu-active" type="checkbox" checked>
+                Show on public Qualification page
+              </label>
+              <div class="record-actions">
+                <button class="btn" type="submit">Save Qualification Menu</button>
+                <button class="btn btn-soft" type="button" data-clear-qualification-menu-form>Clear</button>
+              </div>
+              <p class="form-status" role="status" aria-live="polite"></p>
+            </form>
+
+            <section class="admin-panel">
+              <div class="section-head compact-head">
+                <p class="eyebrow">Saved menu</p>
+                <h2>Qualification Cards</h2>
+                <p>Edit criteria text here when a qualification offer changes.</p>
+              </div>
+              <div class="table-wrap">
+                <table class="mini-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Link</th>
+                      <th>Criteria</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody data-admin-qualification-menu-list>
+                    <tr><td colspan="5">Start the backend to load qualification menu items.</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-alt" id="qualification-criteria-editor">
+        <div class="container">
+          <div class="section-head">
+            <p class="eyebrow">Result calculation</p>
+            <h2>Manage Calculation Criteria</h2>
+            <p>Change the slabs used for result pages. The next required volume or PPV is calculated automatically from the next slab.</p>
+          </div>
+          <div class="admin-layout">
+            <form class="contact-form" data-qualification-criteria-form>
+              <h2>Add / Update Slabs</h2>
+              <div class="field">
+                <label for="qualification-criteria-id">Calculation To Edit</label>
+                <select id="qualification-criteria-id" name="qualification-criteria-id" required></select>
+              </div>
+              <div class="field">
+                <label for="qualification-criteria-title">Criteria Name</label>
+                <input id="qualification-criteria-title" name="qualification-criteria-title" required>
+              </div>
+              <div class="field">
+                <label for="qualification-criteria-metric">Calculate On</label>
+                <select id="qualification-criteria-metric" name="qualification-criteria-metric">
+                  <option value="totalVolume">Total Volume (TV)</option>
+                  <option value="ppv">PPV</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="qualification-criteria-metric-label">Requirement Label</label>
+                <input id="qualification-criteria-metric-label" name="qualification-criteria-metric-label" placeholder="Total Volume (TV) or PPV">
+              </div>
+              <div class="field">
+                <label for="qualification-criteria-not-qualified">Result Before First Slab</label>
+                <input id="qualification-criteria-not-qualified" name="qualification-criteria-not-qualified" placeholder="Not qualified yet">
+              </div>
+              <div class="field">
+                <label for="qualification-criteria-slabs">Slabs</label>
+                <textarea id="qualification-criteria-slabs" name="qualification-criteria-slabs" placeholder="3000 = 1 Ticket Qualified&#10;5000 = 2 Tickets Qualified" required></textarea>
+              </div>
+              <button class="btn" type="submit">Save Calculation Criteria <span aria-hidden="true">&rarr;</span></button>
+              <p class="form-status" role="status" aria-live="polite"></p>
+            </form>
+
+            <section class="admin-panel">
+              <div class="section-head compact-head">
+                <p class="eyebrow">Current slabs</p>
+                <h2>Saved Criteria</h2>
+                <p>Search results and admin sheet tables use these saved slabs.</p>
+              </div>
+              <div class="table-wrap">
+                <table class="mini-table">
+                  <thead>
+                    <tr>
+                      <th>Criteria</th>
+                      <th>Metric</th>
+                      <th>Slabs</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody data-admin-qualification-criteria-list>
+                    <tr><td colspan="4">Start the backend to load calculation criteria.</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="progress-supervisor-sheet">
+        <div class="container">
+          <div class="section-head">
+            <p class="eyebrow">My progress</p>
+            <h2>Supervisor and Above Progress Sheet</h2>
+            <p>Upload one or more Excel sheets for supervisor progress data. Sheets are merged by ID.</p>
+          </div>
+          <div class="admin-layout">
+            <form class="contact-form" data-progress-supervisor-import-form>
+              <h2>Progress Supervisor Excel Sheets</h2>
+              <p class="card-copy">Upload Excel .xlsx sheets with columns for ID, Name, Current Month, Sponsor Name, and PPV.</p>
+              <div class="field">
+                <label for="progress-supervisor-excel-file">Upload Progress Supervisor Sheets</label>
+                <input id="progress-supervisor-excel-file" name="progress-supervisor-excel-file" type="file" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" multiple>
+              </div>
+              <div class="field">
+                <label for="progress-supervisor-csv">Paste CSV Data Instead</label>
+                <textarea id="progress-supervisor-csv" name="progress-supervisor-csv" data-progress-supervisor-csv>id,name,currentMonth,sponsorName,ppv,totalVolume
+5001,Supervisor Progress,June 2026,Sponsor Name,500,12000</textarea>
+              </div>
+              <button class="btn" type="submit">Merge Progress Supervisor Sheets <span aria-hidden="true">&rarr;</span></button>
+              <p class="form-status" role="status" aria-live="polite"></p>
+            </form>
+
+            <form class="contact-form" data-progress-supervisor-record-form>
+              <h2>Add / Update Supervisor Progress ID</h2>
+              <div class="field">
+                <label for="progress-supervisor-record-id">ID</label>
+                <input id="progress-supervisor-record-id" name="progress-supervisor-record-id" autocomplete="off" required>
+              </div>
+              <div class="field">
+                <label for="progress-supervisor-record-name">Name</label>
+                <input id="progress-supervisor-record-name" name="progress-supervisor-record-name" autocomplete="name">
+              </div>
+              <div class="field">
+                <label for="progress-supervisor-record-current-month">Current Month Name</label>
+                <input id="progress-supervisor-record-current-month" name="progress-supervisor-record-current-month">
+              </div>
+              <div class="field">
+                <label for="progress-supervisor-record-sponsor-name">Sponsor Name</label>
+                <input id="progress-supervisor-record-sponsor-name" name="progress-supervisor-record-sponsor-name">
+              </div>
+              <div class="field">
+                <label for="progress-supervisor-record-ppv">PPV</label>
+                <input id="progress-supervisor-record-ppv" name="progress-supervisor-record-ppv" inputmode="decimal">
+              </div>
+              <div class="field">
+                <label for="progress-supervisor-record-total-volume">Total Volume</label>
+                <input id="progress-supervisor-record-total-volume" name="progress-supervisor-record-total-volume" inputmode="decimal">
+              </div>
+              <div class="record-actions">
+                <button class="btn" type="submit">Save Progress ID</button>
+                <button class="btn btn-soft" type="button" data-clear-progress-supervisor-record-form>Clear</button>
+              </div>
+              <p class="form-status" role="status" aria-live="polite"></p>
+            </form>
+          </div>
+
+          <details class="admin-panel sheet-access">
+            <summary>
+              <span>Progress Supervisor Sheet Access</span>
+              <small>Open saved progress results</small>
+            </summary>
+            <div class="sheet-access-head">
+              <button class="btn btn-soft" type="button" data-clear-progress-supervisor-records>Delete All Progress Supervisor Records</button>
+            </div>
+            <div class="table-wrap sheet-table">
+              <table class="mini-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Current Month</th>
+                    <th>Sponsor Name</th>
+                    <th>PPV</th>
+                    <th>TV</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody data-progress-supervisor-records-list>
+                  <tr><td colspan="7">Start the backend to load supervisor progress records.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="section section-alt" id="progress-below-sheet">
+        <div class="container">
+          <div class="section-head">
+            <p class="eyebrow">My progress</p>
+            <h2>Below Supervisor Progress Sheet</h2>
+            <p>Upload one or more Excel sheets for below-supervisor progress data. Sheets are merged by ID.</p>
+          </div>
+          <div class="admin-layout">
+            <form class="contact-form" data-progress-below-import-form>
+              <h2>Progress Below Supervisor Excel Sheets</h2>
+              <p class="card-copy">Upload Excel .xlsx sheets with columns for ID, Name, Current Month, Sponsor Name, PPV, and TV.</p>
+              <div class="field">
+                <label for="progress-below-excel-file">Upload Progress Below Supervisor Sheets</label>
+                <input id="progress-below-excel-file" name="progress-below-excel-file" type="file" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" multiple>
+              </div>
+              <div class="field">
+                <label for="progress-below-csv">Paste CSV Data Instead</label>
+                <textarea id="progress-below-csv" name="progress-below-csv" data-progress-below-csv>id,name,currentMonth,sponsorName,ppv
+6001,Below Progress,June 2026,Sponsor Name,250</textarea>
+              </div>
+              <button class="btn" type="submit">Merge Progress Below Sheets <span aria-hidden="true">&rarr;</span></button>
+              <p class="form-status" role="status" aria-live="polite"></p>
+            </form>
+
+            <form class="contact-form" data-progress-below-record-form>
+              <h2>Add / Update Below Progress ID</h2>
+              <div class="field">
+                <label for="progress-below-record-id">ID</label>
+                <input id="progress-below-record-id" name="progress-below-record-id" autocomplete="off" required>
+              </div>
+              <div class="field">
+                <label for="progress-below-record-name">Name</label>
+                <input id="progress-below-record-name" name="progress-below-record-name" autocomplete="name">
+              </div>
+              <div class="field">
+                <label for="progress-below-record-current-month">Current Month Name</label>
+                <input id="progress-below-record-current-month" name="progress-below-record-current-month">
+              </div>
+              <div class="field">
+                <label for="progress-below-record-sponsor-name">Sponsor Name</label>
+                <input id="progress-below-record-sponsor-name" name="progress-below-record-sponsor-name">
+              </div>
+              <div class="field">
+                <label for="progress-below-record-ppv">PPV</label>
+                <input id="progress-below-record-ppv" name="progress-below-record-ppv" inputmode="decimal">
+              </div>
+              <div class="record-actions">
+                <button class="btn" type="submit">Save Progress ID</button>
+                <button class="btn btn-soft" type="button" data-clear-progress-below-record-form>Clear</button>
+              </div>
+              <p class="form-status" role="status" aria-live="polite"></p>
+            </form>
+          </div>
+
+          <details class="admin-panel sheet-access">
+            <summary>
+              <span>Progress Below Sheet Access</span>
+              <small>Open saved progress results</small>
+            </summary>
+            <div class="sheet-access-head">
+              <button class="btn btn-soft" type="button" data-clear-progress-below-records>Delete All Progress Below Records</button>
+            </div>
+            <div class="table-wrap sheet-table">
+              <table class="mini-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Current Month</th>
+                    <th>Sponsor Name</th>
+                    <th>PPV</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody data-progress-below-records-list>
+                  <tr><td colspan="6">Start the backend to load below progress records.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="section" id="jim-corbett-sheet">
+        <div class="container">
+          <div class="section-head">
+            <p class="eyebrow">Jim Corbett qualification</p>
+            <h2>Supervisor and Above Sheet</h2>
+            <p>Use this for Jim Corbett Supervisor and above results.</p>
+          </div>
+          <div class="admin-layout">
+            <form class="contact-form" data-qualification-import-form>
+              <h2>Jim Corbett Supervisor Excel Sheet</h2>
+              <p class="card-copy">Upload an Excel .xlsx sheet with columns for ID, Name, PPV, and Total Volume. Ticket result and required volume are calculated automatically.</p>
+              <div class="field">
+                <label for="qualification-excel-file">Upload Excel Sheet</label>
+                <input id="qualification-excel-file" name="qualification-excel-file" type="file" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+              </div>
+              <div class="field">
+                <label for="qualification-csv">Paste CSV Data Instead</label>
+                <textarea id="qualification-csv" name="qualification-csv" data-qualification-csv>id,name,ppv,totalVolume
+1001,Sample Name,500,12000
+1002,Another Name,250,6800</textarea>
+              </div>
+              <button class="btn" type="submit">Save Qualification Excel Sheet <span aria-hidden="true">&rarr;</span></button>
+              <p class="form-status" role="status" aria-live="polite"></p>
+            </form>
+
+            <form class="contact-form" data-qualification-record-form>
+              <h2>Add / Update Single ID</h2>
+              <p class="card-copy">Edit a row anytime. Required volume and ticket result recalculate from Total Volume.</p>
+              <div class="field">
+                <label for="record-id">ID</label>
+                <input id="record-id" name="record-id" autocomplete="off" required>
+              </div>
+              <div class="field">
+                <label for="record-name">Name</label>
+                <input id="record-name" name="record-name" autocomplete="name">
+              </div>
+              <div class="field">
+                <label for="record-ppv">PPV</label>
+                <input id="record-ppv" name="record-ppv" inputmode="decimal">
+              </div>
+              <div class="field">
+                <label for="record-total-volume">Total Volume</label>
+                <input id="record-total-volume" name="record-total-volume" inputmode="decimal" required>
+              </div>
+              <div class="record-actions">
+                <button class="btn" type="submit">Save ID</button>
+                <button class="btn btn-soft" type="button" data-clear-record-form>Clear</button>
+              </div>
+              <p class="form-status" role="status" aria-live="polite"></p>
+            </form>
+          </div>
+
+          <details class="admin-panel sheet-access">
+            <summary>
+              <span>Supervisor Sheet Access</span>
+              <small>Open saved ID results</small>
+            </summary>
+            <div class="sheet-access-head">
+              <button class="btn btn-soft" type="button" data-clear-qualification-records>Delete All Records</button>
+            </div>
+            <div class="table-wrap sheet-table">
+              <table class="mini-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>PPV</th>
+                    <th>Total Volume</th>
+                    <th>Required for Next Ticket</th>
+                    <th>Tickets Qualified</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody data-qualification-records-list>
+                  <tr><td colspan="7">Start the backend to load qualification records.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="section section-alt" id="below-supervisor-sheet">
+        <div class="container">
+          <div class="section-head">
+            <p class="eyebrow">Jim Corbett qualification</p>
+            <h2>Below Supervisor Sheet</h2>
+            <p>Use this only for Jim Corbett below-supervisor ticket results.</p>
+          </div>
+          <div class="admin-layout">
+            <form class="contact-form" data-below-import-form>
+              <h2>Below Supervisor Excel Sheet</h2>
+              <p class="card-copy">Upload one or more Excel .xlsx sheets with columns for ID, Name, PPV, and Total Volume. They are merged into one below-supervisor dataset.</p>
+              <div class="field">
+                <label for="below-excel-file">Upload Below Supervisor Excel Sheets</label>
+                <input id="below-excel-file" name="below-excel-file" type="file" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" multiple>
+              </div>
+              <div class="field">
+                <label for="below-csv">Paste CSV Data Instead</label>
+                <textarea id="below-csv" name="below-csv" data-below-csv>id,name,ppv,totalVolume
+2001,Below Name,1200,1200
+2002,Another Below,1750,1750</textarea>
+              </div>
+              <button class="btn" type="submit">Merge Below Supervisor Sheets <span aria-hidden="true">&rarr;</span></button>
+              <p class="form-status" role="status" aria-live="polite"></p>
+            </form>
+
+            <form class="contact-form" data-below-record-form>
+              <h2>Add / Update Below Supervisor ID</h2>
+              <p class="card-copy">Edit a below-supervisor row anytime. Required PPV and ticket result recalculate from PPV.</p>
+              <div class="field">
+                <label for="below-record-id">ID</label>
+                <input id="below-record-id" name="below-record-id" autocomplete="off" required>
+              </div>
+              <div class="field">
+                <label for="below-record-name">Name</label>
+                <input id="below-record-name" name="below-record-name" autocomplete="name">
+              </div>
+              <div class="field">
+                <label for="below-record-ppv">PPV</label>
+                <input id="below-record-ppv" name="below-record-ppv" inputmode="decimal" required>
+              </div>
+              <div class="field">
+                <label for="below-record-total-volume">Total Volume</label>
+                <input id="below-record-total-volume" name="below-record-total-volume" inputmode="decimal">
+              </div>
+              <div class="record-actions">
+                <button class="btn" type="submit">Save Below ID</button>
+                <button class="btn btn-soft" type="button" data-clear-below-record-form>Clear</button>
+              </div>
+              <p class="form-status" role="status" aria-live="polite"></p>
+            </form>
+          </div>
+
+          <details class="admin-panel sheet-access">
+            <summary>
+              <span>Below Supervisor Sheet Access</span>
+              <small>Open saved below-supervisor results</small>
+            </summary>
+            <div class="sheet-access-head">
+              <button class="btn btn-soft" type="button" data-clear-below-records>Delete All Below Supervisor Records</button>
+            </div>
+            <div class="table-wrap sheet-table">
+              <table class="mini-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>PPV</th>
+                    <th>Total Volume</th>
+                    <th>Required PPV for Next Ticket</th>
+                    <th>Tickets Qualified</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody data-below-records-list>
+                  <tr><td colspan="7">Start the backend to load below-supervisor records.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="section" id="gifts-sheet">
+        <div class="container">
+          <div class="section-head">
+            <p class="eyebrow">Gifts for PC and Associates</p>
+            <h2>Gifts Qualification Sheet</h2>
+            <p>Upload a separate Gifts Excel sheet. Results calculate from PPV.</p>
+          </div>
+          <div class="admin-layout">
+            <form class="contact-form" data-gift-import-form>
+              <h2>Gifts Excel Sheet</h2>
+              <p class="card-copy">Upload an Excel .xlsx sheet with columns for ID, Name, and PPV.</p>
+              <div class="field">
+                <label for="gift-excel-file">Upload Gifts Excel Sheet</label>
+                <input id="gift-excel-file" name="gift-excel-file" type="file" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+              </div>
+              <div class="field">
+                <label for="gift-csv">Paste CSV Data Instead</label>
+                <textarea id="gift-csv" name="gift-csv" data-gift-csv>id,name,ppv,totalVolume
+3001,Gift Name,250,250
+3002,Another Gift,1000,1000</textarea>
+              </div>
+              <button class="btn" type="submit">Save Gifts Excel Sheet <span aria-hidden="true">&rarr;</span></button>
+              <p class="form-status" role="status" aria-live="polite"></p>
+            </form>
+
+            <form class="contact-form" data-gift-record-form>
+              <h2>Add / Update Gift ID</h2>
+              <p class="card-copy">Edit a Gifts row anytime. Gift result recalculates from PPV.</p>
+              <div class="field">
+                <label for="gift-record-id">ID</label>
+                <input id="gift-record-id" name="gift-record-id" autocomplete="off" required>
+              </div>
+              <div class="field">
+                <label for="gift-record-name">Name</label>
+                <input id="gift-record-name" name="gift-record-name" autocomplete="name">
+              </div>
+              <div class="field">
+                <label for="gift-record-ppv">PPV</label>
+                <input id="gift-record-ppv" name="gift-record-ppv" inputmode="decimal" required>
+              </div>
+              <div class="field">
+                <label for="gift-record-total-volume">Total Volume</label>
+                <input id="gift-record-total-volume" name="gift-record-total-volume" inputmode="decimal">
+              </div>
+              <div class="record-actions">
+                <button class="btn" type="submit">Save Gift ID</button>
+                <button class="btn btn-soft" type="button" data-clear-gift-record-form>Clear</button>
+              </div>
+              <p class="form-status" role="status" aria-live="polite"></p>
+            </form>
+          </div>
+
+          <details class="admin-panel sheet-access">
+            <summary>
+              <span>Gifts Sheet Access</span>
+              <small>Open saved Gifts results</small>
+            </summary>
+            <div class="sheet-access-head">
+              <button class="btn btn-soft" type="button" data-clear-gift-records>Delete All Gift Records</button>
+            </div>
+            <div class="table-wrap sheet-table">
+              <table class="mini-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>PPV</th>
+                    <th>Total Volume</th>
+                    <th>Required PPV for Next Gift</th>
+                    <th>Gift Result</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody data-gift-records-list>
+                  <tr><td colspan="7">Start the backend to load Gift records.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="section section-alt" id="goa-sheet">
+        <div class="container">
+          <div class="section-head">
+            <p class="eyebrow">Goa qualification</p>
+            <h2>Goa Qualification Sheet</h2>
+            <p>Upload a separate Goa Excel sheet. This qualification is only for Supervisor and above and calculates from Total Volume.</p>
+          </div>
+          <div class="admin-layout">
+            <form class="contact-form" data-goa-import-form>
+              <h2>Goa Excel Sheet</h2>
+              <p class="card-copy">Upload an Excel .xlsx sheet with columns for ID, Name, and Total Volume.</p>
+              <div class="field">
+                <label for="goa-excel-file">Upload Goa Excel Sheet</label>
+                <input id="goa-excel-file" name="goa-excel-file" type="file" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+              </div>
+              <div class="field">
+                <label for="goa-csv">Paste CSV Data Instead</label>
+                <textarea id="goa-csv" name="goa-csv" data-goa-csv>id,name,ppv,totalVolume
+4001,Goa Name,0,28000
+4002,Another Goa,0,36000</textarea>
+              </div>
+              <button class="btn" type="submit">Save Goa Excel Sheet <span aria-hidden="true">&rarr;</span></button>
+              <p class="form-status" role="status" aria-live="polite"></p>
+            </form>
+
+            <form class="contact-form" data-goa-record-form>
+              <h2>Add / Update Goa ID</h2>
+              <p class="card-copy">Edit a Goa row anytime. Goa result recalculates from Total Volume.</p>
+              <div class="field">
+                <label for="goa-record-id">ID</label>
+                <input id="goa-record-id" name="goa-record-id" autocomplete="off" required>
+              </div>
+              <div class="field">
+                <label for="goa-record-name">Name</label>
+                <input id="goa-record-name" name="goa-record-name" autocomplete="name">
+              </div>
+              <div class="field">
+                <label for="goa-record-ppv">PPV</label>
+                <input id="goa-record-ppv" name="goa-record-ppv" inputmode="decimal">
+              </div>
+              <div class="field">
+                <label for="goa-record-total-volume">Total Volume</label>
+                <input id="goa-record-total-volume" name="goa-record-total-volume" inputmode="decimal" required>
+              </div>
+              <div class="record-actions">
+                <button class="btn" type="submit">Save Goa ID</button>
+                <button class="btn btn-soft" type="button" data-clear-goa-record-form>Clear</button>
+              </div>
+              <p class="form-status" role="status" aria-live="polite"></p>
+            </form>
+          </div>
+
+          <details class="admin-panel sheet-access">
+            <summary>
+              <span>Goa Sheet Access</span>
+              <small>Open saved Goa results</small>
+            </summary>
+            <div class="sheet-access-head">
+              <button class="btn btn-soft" type="button" data-clear-goa-records>Delete All Goa Records</button>
+            </div>
+            <div class="table-wrap sheet-table">
+              <table class="mini-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>PPV</th>
+                    <th>Total Volume</th>
+                    <th>Required Volume for Next Ticket</th>
+                    <th>Goa Result</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody data-goa-records-list>
+                  <tr><td colspan="7">Start the backend to load Goa records.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="section" id="june-special-offer-sheet">
+        <div class="container">
+          <div class="section-head">
+            <p class="eyebrow">June 2026 Special Offer</p>
+            <h2>June Special Offer Sheet</h2>
+            <p>Upload a separate Excel sheet for the June 2026 Special Offer. This is only for Supervisor and above and calculates rewards from TVP / Total Volume.</p>
+          </div>
+          <div class="admin-layout">
+            <form class="contact-form" data-june-special-offer-import-form>
+              <h2>June Offer Excel Sheet</h2>
+              <p class="card-copy">Upload an Excel .xlsx sheet with columns for ID, Name, and Total Volume or TVP.</p>
+              <div class="field">
+                <label for="june-special-offer-excel-file">Upload June Offer Excel Sheet</label>
+                <input id="june-special-offer-excel-file" name="june-special-offer-excel-file" type="file" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+              </div>
+              <div class="field">
+                <label for="june-special-offer-csv">Paste CSV Data Instead</label>
+                <textarea id="june-special-offer-csv" name="june-special-offer-csv" data-june-special-offer-csv>id,name,ppv,totalVolume
+5001,June Offer Name,0,1500
+5002,Another June Offer,0,5000</textarea>
+              </div>
+              <button class="btn" type="submit">Save June Offer Excel Sheet <span aria-hidden="true">&rarr;</span></button>
+              <p class="form-status" role="status" aria-live="polite"></p>
+            </form>
+
+            <form class="contact-form" data-june-special-offer-record-form>
+              <h2>Add / Update June Offer ID</h2>
+              <p class="card-copy">Edit a June Offer row anytime. Reward result recalculates from Total Volume / TVP.</p>
+              <div class="field">
+                <label for="june-special-offer-record-id">ID</label>
+                <input id="june-special-offer-record-id" name="june-special-offer-record-id" autocomplete="off" required>
+              </div>
+              <div class="field">
+                <label for="june-special-offer-record-name">Name</label>
+                <input id="june-special-offer-record-name" name="june-special-offer-record-name" autocomplete="name">
+              </div>
+              <div class="field">
+                <label for="june-special-offer-record-ppv">PPV</label>
+                <input id="june-special-offer-record-ppv" name="june-special-offer-record-ppv" inputmode="decimal">
+              </div>
+              <div class="field">
+                <label for="june-special-offer-record-total-volume">TVP / Total Volume</label>
+                <input id="june-special-offer-record-total-volume" name="june-special-offer-record-total-volume" inputmode="decimal" required>
+              </div>
+              <div class="record-actions">
+                <button class="btn" type="submit">Save June Offer ID</button>
+                <button class="btn btn-soft" type="button" data-clear-june-special-offer-record-form>Clear</button>
+              </div>
+              <p class="form-status" role="status" aria-live="polite"></p>
+            </form>
+          </div>
+
+          <details class="admin-panel sheet-access">
+            <summary>
+              <span>June Offer Sheet Access</span>
+              <small>Open saved June Offer results</small>
+            </summary>
+            <div class="sheet-access-head">
+              <button class="btn btn-soft" type="button" data-clear-june-special-offer-records>Delete All June Offer Records</button>
+            </div>
+            <div class="table-wrap sheet-table">
+              <table class="mini-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>PPV</th>
+                    <th>TVP / Total Volume</th>
+                    <th>Required TVP for Next Slab</th>
+                    <th>Reward Result</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody data-june-special-offer-records-list>
+                  <tr><td colspan="7">Start the backend to load June Offer records.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="section" id="admin-searches">
+        <div class="container">
+          <div class="section-head">
+            <p class="eyebrow">Check progress supervisor sheet</p>
+            <h2>Find Supervisor Progress by ID</h2>
+            <p>Enter an ID after saving the Supervisor Progress sheets.</p>
+          </div>
+          <form class="contact-form qualification-check-panel" data-admin-progress-supervisor-check-form>
+            <div class="field">
+              <label for="admin-progress-supervisor-check-id">ID</label>
+              <input id="admin-progress-supervisor-check-id" name="admin-progress-supervisor-check-id" autocomplete="off" required>
+            </div>
+            <button class="btn" type="submit">Check Supervisor Progress ID</button>
+            <p class="form-status" role="status" aria-live="polite"></p>
+          </form>
+          <div class="slab-grid admin-result-grid">
+            <article class="slab-card"><span>ID</span><strong data-admin-progress-supervisor-id>--</strong></article>
+            <article class="slab-card"><span>Name</span><strong data-admin-progress-supervisor-name>--</strong></article>
+            <article class="slab-card"><span>Current Month Name</span><strong data-admin-progress-supervisor-current-month>--</strong></article>
+            <article class="slab-card"><span>Sponsor Name</span><strong data-admin-progress-supervisor-sponsor-name>--</strong></article>
+            <article class="slab-card"><span>PPV</span><strong data-admin-progress-supervisor-ppv>--</strong></article>
+            <article class="slab-card slab-result"><span>TV</span><strong data-admin-progress-supervisor-total-volume>--</strong></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-alt">
+        <div class="container">
+          <div class="section-head">
+            <p class="eyebrow">Check progress below sheet</p>
+            <h2>Find Below Supervisor Progress by ID</h2>
+            <p>Enter an ID after saving the Below Supervisor Progress sheets.</p>
+          </div>
+          <form class="contact-form qualification-check-panel" data-admin-progress-below-check-form>
+            <div class="field">
+              <label for="admin-progress-below-check-id">ID</label>
+              <input id="admin-progress-below-check-id" name="admin-progress-below-check-id" autocomplete="off" required>
+            </div>
+            <button class="btn" type="submit">Check Below Progress ID</button>
+            <p class="form-status" role="status" aria-live="polite"></p>
+          </form>
+          <div class="slab-grid admin-result-grid">
+            <article class="slab-card"><span>ID</span><strong data-admin-progress-below-id>--</strong></article>
+            <article class="slab-card"><span>Name</span><strong data-admin-progress-below-name>--</strong></article>
+            <article class="slab-card"><span>Current Month Name</span><strong data-admin-progress-below-current-month>--</strong></article>
+            <article class="slab-card"><span>Sponsor Name</span><strong data-admin-progress-below-sponsor-name>--</strong></article>
+            <article class="slab-card slab-result"><span>PPV</span><strong data-admin-progress-below-ppv>--</strong></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="section-head">
+            <p class="eyebrow">Check from Excel sheet</p>
+            <h2>Find Qualification Data by ID</h2>
+            <p>Enter an ID after saving the Excel sheet to show the matching qualification data from the backend.</p>
+          </div>
+          <form class="contact-form qualification-check-panel" data-admin-qualification-check-form>
+            <div class="field">
+              <label for="admin-check-id">ID</label>
+              <input id="admin-check-id" name="admin-check-id" autocomplete="off" required>
+            </div>
+            <button class="btn" type="submit">Check ID</button>
+            <p class="form-status" role="status" aria-live="polite"></p>
+          </form>
+          <div class="slab-grid admin-result-grid" data-admin-qualification-result>
+            <article class="slab-card"><span>ID</span><strong data-admin-result-id>--</strong></article>
+            <article class="slab-card"><span>Name</span><strong data-admin-result-name>--</strong></article>
+            <article class="slab-card"><span>PPV</span><strong data-admin-result-ppv>--</strong></article>
+            <article class="slab-card"><span>Total Volume</span><strong data-admin-result-total-volume>--</strong></article>
+            <article class="slab-card"><span>Required for Next Ticket</span><strong data-admin-result-volume-required>--</strong></article>
+            <article class="slab-card slab-result"><span>Result</span><strong data-admin-result-result>--</strong></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-alt">
+        <div class="container">
+          <div class="section-head">
+            <p class="eyebrow">Check below supervisor sheet</p>
+            <h2>Find Below Supervisor Data by ID</h2>
+            <p>Enter an ID after saving the below-supervisor Excel sheet to show the matching PPV-based qualification data.</p>
+          </div>
+          <form class="contact-form qualification-check-panel" data-admin-below-check-form>
+            <div class="field">
+              <label for="admin-below-check-id">ID</label>
+              <input id="admin-below-check-id" name="admin-below-check-id" autocomplete="off" required>
+            </div>
+            <button class="btn" type="submit">Check Below ID</button>
+            <p class="form-status" role="status" aria-live="polite"></p>
+          </form>
+          <div class="slab-grid admin-result-grid">
+            <article class="slab-card"><span>ID</span><strong data-admin-below-id>--</strong></article>
+            <article class="slab-card"><span>Name</span><strong data-admin-below-name>--</strong></article>
+            <article class="slab-card"><span>PPV</span><strong data-admin-below-ppv>--</strong></article>
+            <article class="slab-card"><span>Total Volume</span><strong data-admin-below-total-volume>--</strong></article>
+            <article class="slab-card"><span>Required PPV for Next Ticket</span><strong data-admin-below-volume-required>--</strong></article>
+            <article class="slab-card slab-result"><span>Result</span><strong data-admin-below-result>--</strong></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="section-head">
+            <p class="eyebrow">Check Gifts sheet</p>
+            <h2>Find Gifts Data by ID</h2>
+            <p>Enter an ID after saving the Gifts Excel sheet to show the matching PPV gift result.</p>
+          </div>
+          <form class="contact-form qualification-check-panel" data-admin-gift-check-form>
+            <div class="field">
+              <label for="admin-gift-check-id">ID</label>
+              <input id="admin-gift-check-id" name="admin-gift-check-id" autocomplete="off" required>
+            </div>
+            <button class="btn" type="submit">Check Gift ID</button>
+            <p class="form-status" role="status" aria-live="polite"></p>
+          </form>
+          <div class="slab-grid admin-result-grid">
+            <article class="slab-card"><span>ID</span><strong data-admin-gift-id>--</strong></article>
+            <article class="slab-card"><span>Name</span><strong data-admin-gift-name>--</strong></article>
+            <article class="slab-card"><span>PPV</span><strong data-admin-gift-ppv>--</strong></article>
+            <article class="slab-card"><span>Total Volume</span><strong data-admin-gift-total-volume>--</strong></article>
+            <article class="slab-card"><span>Required PPV for Next Gift</span><strong data-admin-gift-volume-required>--</strong></article>
+            <article class="slab-card slab-result"><span>Result</span><strong data-admin-gift-result>--</strong></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-alt">
+        <div class="container">
+          <div class="section-head">
+            <p class="eyebrow">Check Goa sheet</p>
+            <h2>Find Goa Data by ID</h2>
+            <p>Enter an ID after saving the Goa Excel sheet to show the matching Total Volume result.</p>
+          </div>
+          <form class="contact-form qualification-check-panel" data-admin-goa-check-form>
+            <div class="field">
+              <label for="admin-goa-check-id">ID</label>
+              <input id="admin-goa-check-id" name="admin-goa-check-id" autocomplete="off" required>
+            </div>
+            <button class="btn" type="submit">Check Goa ID</button>
+            <p class="form-status" role="status" aria-live="polite"></p>
+          </form>
+          <div class="slab-grid admin-result-grid">
+            <article class="slab-card"><span>ID</span><strong data-admin-goa-id>--</strong></article>
+            <article class="slab-card"><span>Name</span><strong data-admin-goa-name>--</strong></article>
+            <article class="slab-card"><span>PPV</span><strong data-admin-goa-ppv>--</strong></article>
+            <article class="slab-card"><span>Total Volume</span><strong data-admin-goa-total-volume>--</strong></article>
+            <article class="slab-card"><span>Required Volume for Next Ticket</span><strong data-admin-goa-volume-required>--</strong></article>
+            <article class="slab-card slab-result"><span>Result</span><strong data-admin-goa-result>--</strong></article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span><span>Wellness Path</span></a><p>&copy; 2026 All Rights Reserved</p></div>
+        <div class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="qualification.html">Qualification</a>
+          <a href="tickets.html">Tickets</a>
+          <a href="success-stories.html">Success Stories</a><a href="about.html">About Us</a><a href="contact.html">Contact</a><a href="admin.html">Admin</a>
+        </div>
+        <div class="footer-contact">
+          <div class="footer-contact-lines">
+            <a href="tel:+918439572500">+91 84395 72500</a>
+            <a href="mailto:arnavsingh2008hl@gmail.com">arnavsingh2008hl@gmail.com</a>
+          </div>
+          <div class="footer-socials" aria-label="Social links">
+            <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" ry="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/></svg></a>
+            <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.6 7.2a3 3 0 0 0-2.1-2.1C17.6 4.5 12 4.5 12 4.5s-5.6 0-7.5.6a3 3 0 0 0-2.1 2.1A31.8 31.8 0 0 0 2 12a31.8 31.8 0 0 0 .4 4.8 3 3 0 0 0 2.1 2.1c1.9.6 7.5.6 7.5.6s5.6 0 7.5-.6a3 3 0 0 0 2.1-2.1A31.8 31.8 0 0 0 22 12a31.8 31.8 0 0 0-.4-4.8Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="m10 15 5-3-5-3v6Z" fill="currentColor"/></svg></a>
+            <a href="https://whatsapp.com/channel/0029VbCrs5YIHphJzvdMWi0n" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.2 19.8 5.5 16A8.2 8.2 0 1 1 8 18.5l-3.8 1.3Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9.2 8.5c.2-.4.4-.4.7-.4h.5c.2 0 .4.1.5.4l.6 1.4c.1.3.1.5-.1.7l-.4.5c.7 1.2 1.6 2 2.8 2.6l.6-.5c.2-.2.4-.2.7-.1l1.4.6c.3.1.4.3.4.6v.5c0 .3-.1.5-.4.7-.5.4-1.2.6-1.9.5-3.1-.4-5.7-2.9-6.1-6.1-.1-.7.1-1.4.5-1.9Z" fill="currentColor"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script src="script.js"></script>
+  </body>
+</html>

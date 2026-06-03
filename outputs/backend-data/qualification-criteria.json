@@ -1,0 +1,140 @@
+[
+  {
+    "id": "jim-supervisor",
+    "title": "Jim Corbett Supervisor and Above",
+    "metric": "totalVolume",
+    "metricLabel": "Total Volume",
+    "notQualifiedResult": "0 Tickets Qualified",
+    "slabs": [
+      {
+        "threshold": 3000,
+        "result": "1 Ticket Qualified"
+      },
+      {
+        "threshold": 5000,
+        "result": "2 Tickets Qualified"
+      },
+      {
+        "threshold": 7000,
+        "result": "3 Tickets Qualified"
+      },
+      {
+        "threshold": 9000,
+        "result": "4 Tickets Qualified"
+      }
+    ],
+    "updatedAt": "2026-06-02T10:51:36.624Z"
+  },
+  {
+    "id": "jim-below",
+    "title": "Jim Corbett Below Supervisor",
+    "metric": "ppv",
+    "metricLabel": "PPV",
+    "notQualifiedResult": "0 Tickets Qualified",
+    "slabs": [
+      {
+        "threshold": 1000,
+        "result": "1 Ticket Qualified"
+      },
+      {
+        "threshold": 1500,
+        "result": "2 Tickets Qualified"
+      },
+      {
+        "threshold": 2000,
+        "result": "3 Tickets Qualified"
+      }
+    ],
+    "updatedAt": "2026-06-02T10:51:13.929Z"
+  },
+  {
+    "id": "gifts",
+    "title": "Gifts for PC and Associates",
+    "metric": "ppv",
+    "metricLabel": "PPV",
+    "notQualifiedResult": "Not qualified yet",
+    "slabs": [
+      {
+        "threshold": 100,
+        "result": "Shaker Cup"
+      },
+      {
+        "threshold": 200,
+        "result": "Shaker Cup + Herbalife Nutrition Diary"
+      },
+      {
+        "threshold": 300,
+        "result": "Steel Bottle"
+      },
+      {
+        "threshold": 500,
+        "result": "Steel Bottle + Electric Kettle"
+      },
+      {
+        "threshold": 1000,
+        "result": "BMI Machine"
+      }
+    ],
+    "updatedAt": "2026-06-02T10:51:13.929Z"
+  },
+  {
+    "id": "goa",
+    "title": "Goa Qualification",
+    "metric": "totalVolume",
+    "metricLabel": "Total Volume",
+    "notQualifiedResult": "Not qualified yet",
+    "slabs": [
+      {
+        "threshold": 28000,
+        "result": "Single Ticket Free"
+      },
+      {
+        "threshold": 36000,
+        "result": "Couple Ticket Free"
+      }
+    ],
+    "updatedAt": "2026-06-02T10:51:13.929Z"
+  },
+  {
+    "id": "june-special-offer",
+    "title": "June 2026 Special Offer",
+    "metric": "totalVolume",
+    "metricLabel": "TVP",
+    "notQualifiedResult": "Not qualified yet",
+    "slabs": [
+      {
+        "threshold": 500,
+        "result": "01 Afresh"
+      },
+      {
+        "threshold": 1000,
+        "result": "01 Shake Mix"
+      },
+      {
+        "threshold": 1500,
+        "result": "01 Afresh + 01 Shake Mix"
+      },
+      {
+        "threshold": 2000,
+        "result": "02 Shake Mix"
+      },
+      {
+        "threshold": 2500,
+        "result": "01 Afresh + 02 Shake Mix"
+      },
+      {
+        "threshold": 3000,
+        "result": "03 Shake Mix"
+      },
+      {
+        "threshold": 4000,
+        "result": "04 Shake Mix"
+      },
+      {
+        "threshold": 5000,
+        "result": "05 Shake Mix"
+      }
+    ],
+    "updatedAt": "2026-06-02T12:00:00.000Z"
+  }
+]
